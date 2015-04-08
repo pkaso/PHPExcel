@@ -98,6 +98,9 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 																				   ),
 																),
 											),	//	Bottom border
+								'strong' => array(
+									'font' => array( 'bold' => true)
+								)
 							 );
 
 
@@ -255,6 +258,10 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 						$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
 						if ($cellContent > '')
 							$cellContent .= ' ';
+						
+						if (isset($this->_formats[$child->nodeName])) {
+							$sheet->getStyle($column.$row)->applyFromArray($this->_formats[$child->nodeName]);
+						}
 //						echo 'END OF STYLING, SPAN OR DIV<br />';
 						break;
 					case 'hr' :
